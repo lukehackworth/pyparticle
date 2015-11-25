@@ -20,7 +20,7 @@ background_color = (100, 150, 50)
 #particle variables
 base_particle_loc = (width/2,height/2)
 loc_particle_2 = (2,2)
-max_dist = 10
+max_dist = 15
 particle_loc_array = []
 
 def main():
@@ -43,15 +43,28 @@ def main():
 			if(part_a != part_b):
 				part_dist = locsDistCalc(part_a, part_b)
 				if(part_dist < max_dist):
-					part_delta = particleDeltaFind(part_a, part_b)
-					m = 0.5 * (max_dist - part_dist)
-					x_a = part_b[0] + (m*part_delta[0])/part_dist
-					y_a = part_b[1] + (m*part_delta[1])/part_dist
-					part_b[0] = x_a
-					part_b[1] = y_a
-
+					###REFACTOR
+					
+					###
+					j = particleBoundsCheck(part_a, part_b, part_dist)
+					part_a = j[0]
+					part_b = j[1]
+	
 		particle_count += 1
+	#time.sleep(.25)
 	print particle_count
+
+def particleBoundsCheck(part_a, part_b, part_dist):
+	#TODO: Add particle edge bounds here, too
+	part_delta = particleDeltaFind(part_a, part_b)
+	m = 0.5 * (max_dist - part_dist)
+	delta_x_a = (m*part_delta[0])/part_dist
+	delta_y_a = (m*part_delta[1])/part_dist
+	part_b[0] += delta_x_a
+	part_b[1] += delta_y_a
+	part_a[0] -= delta_x_a
+	part_a[1] -= delta_y_a
+	return [part_a,part_b]
 
 def particleCorrectLocFind(particle_a, particle_b):
 	#base_particle_loc = particle_a
