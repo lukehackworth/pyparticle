@@ -40,8 +40,7 @@ particle_loc_array = []
 
 def main():
 	global loc_particle_2
-	mouse_loc = pygame.mouse.get_pos()
-	mouseCheck(mouse_loc)
+	mouseCheck()
 	
 	particle_count = 0
 	#very greedy
@@ -58,10 +57,12 @@ def main():
 	#time.sleep(.25)
 	print particle_count
 
-def mouseCheck(mouse_loc):
+def mouseCheck():
 	is_mouse_pressed = pygame.mouse.get_pressed()[0]
 	
+	#Adds particle
 	if(is_mouse_pressed):
+		mouse_loc = pygame.mouse.get_pos()
 		#pygame.mouse.get_pos is a tuple(immutable), must be changed to array before assigning to particle so particle loc can be updated
 		mouse_loc_array = [mouse_loc[0], mouse_loc[1]]
 		#Random float added to locs so no two particles have same coordinates
