@@ -55,7 +55,7 @@ def main():
 	
 		particle_count += 1
 	#time.sleep(.25)
-	print particle_count
+	#print particle_count
 
 def mouseCheck():
 	is_mouse_pressed = pygame.mouse.get_pressed()[0]
@@ -121,6 +121,9 @@ def screenUpdate():
 #main loop	
 while True:
 	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			pygame.quit()
+			sys.exit()
 		pass
 	main()
 	screenUpdate() #draws everything
