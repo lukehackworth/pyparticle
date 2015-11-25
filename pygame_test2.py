@@ -26,15 +26,7 @@ particle_loc_array = []
 def main():
 	global loc_particle_2
 	mouse_loc = pygame.mouse.get_pos()
-	#pygame.mouse.get_pos is a tuple(immutable), must be changed to array before assigning to particle so particle loc can be updated
-	mouse_loc_array = [mouse_loc[0], mouse_loc[1]]
-
-	is_mouse_pressed = pygame.mouse.get_pressed()[0]
-	
-	if(is_mouse_pressed):
-		#Random float added to locs so no two particles have same coordinates
-		particle_loc_array.append([mouse_loc_array[0]+random.random(), mouse_loc_array[1]+random.random()])
-		
+	mouseCheck(mouse_loc)
 	
 	particle_count = 0
 	#very greedy
@@ -43,9 +35,6 @@ def main():
 			if(part_a != part_b):
 				part_dist = locsDistCalc(part_a, part_b)
 				if(part_dist < max_dist):
-					###REFACTOR
-					
-					###
 					j = particleBoundsCheck(part_a, part_b, part_dist)
 					part_a = j[0]
 					part_b = j[1]
@@ -53,6 +42,15 @@ def main():
 		particle_count += 1
 	#time.sleep(.25)
 	print particle_count
+
+def mouseCheck(mouse_loc):
+	is_mouse_pressed = pygame.mouse.get_pressed()[0]
+	
+	if(is_mouse_pressed):
+		#pygame.mouse.get_pos is a tuple(immutable), must be changed to array before assigning to particle so particle loc can be updated
+		mouse_loc_array = [mouse_loc[0], mouse_loc[1]]
+		#Random float added to locs so no two particles have same coordinates
+		particle_loc_array.append([mouse_loc_array[0]+random.random(), mouse_loc_array[1]+random.random()])
 
 def particleBoundsCheck(part_a, part_b, part_dist):
 	#TODO: Add particle edge bounds here, too
