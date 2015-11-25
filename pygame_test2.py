@@ -112,8 +112,6 @@ def locsDistCalc(a, b):
 def screenUpdate():
 	screen.fill(background_color)
 	
-	pygame.draw.circle(screen, black, (50,50), 30, 2)
-	
 	for particle in particle_loc_array:
 		pygame.draw.circle(screen, black, (int(particle[0]), int(particle[1])), 5, 2)
 	
