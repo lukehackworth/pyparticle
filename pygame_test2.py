@@ -20,7 +20,7 @@ background_color = (100, 150, 50)
 #particle variables
 base_particle_loc = (width/2,height/2)
 loc_particle_2 = (2,2)
-max_dist = 50
+max_dist = 10
 particle_loc_array = []
 
 def main():
@@ -34,26 +34,24 @@ def main():
 	if(is_mouse_pressed):
 		#Random float added to locs so no two particles have same coordinates
 		particle_loc_array.append([mouse_loc_array[0]+random.random(), mouse_loc_array[1]+random.random()])
+		
 	
-	#print is_mouse_pressed
-	#loc_particle_2 = mouse_loc
-	
+	particle_count = 0
 	#very greedy
 	for part_a in particle_loc_array:
 		for part_b in particle_loc_array:
 			if(part_a != part_b):
 				part_dist = locsDistCalc(part_a, part_b)
-				print "part_dist is " + str(part_dist)
-				part_delta = particleDeltaFind(part_a, part_b)
-				xf = (part_delta[0]*max_dist)/part_dist
-				yf = (part_delta[1]*max_dist)/part_dist
-				part_b[0] = part_a[0] + 0.5*xf
-				part_b[1] = part_a[1] + 0.5*yf
-				part_a[0] = part_a[0] + -0.5*xf
-				part_a[1] = part_a[1] + -0.5*xf
-				time.sleep(.1)
-			
+				if(part_dist < max_dist):
+					part_delta = particleDeltaFind(part_a, part_b)
+					m = 0.5 * (max_dist - part_dist)
+					x_a = part_b[0] + (m*part_delta[0])/part_dist
+					y_a = part_b[1] + (m*part_delta[1])/part_dist
+					part_b[0] = x_a
+					part_b[1] = y_a
 
+		particle_count += 1
+	print particle_count
 
 def particleCorrectLocFind(particle_a, particle_b):
 	#base_particle_loc = particle_a
