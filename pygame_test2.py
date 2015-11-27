@@ -43,7 +43,6 @@ class Particle:
 def main():
     mouseCheck()
 
-    particle_count = 0
     #very greedy
     for part_a in particle_array:
         for part_b in particle_array:
@@ -53,8 +52,6 @@ def main():
                     j = particleBoundsCheck(part_a.loc, part_b.loc, part_dist)
                     part_a.loc = j[0]
                     part_b.loc = j[1]
-
-    particle_count += 1
 
 def mouseCheck():
     is_mouse_pressed = pygame.mouse.get_pressed()[0]
