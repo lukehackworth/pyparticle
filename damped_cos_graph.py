@@ -11,15 +11,17 @@ offset = 500
 angular_frequency = 1
 phase_angle = 1
 desired_max_dist = 28
+bounding_dist = .75*(desired_max_dist)
 
 #X generator
 x_count = 200
-x_diff = 0.105
+x_diff = float(bounding_dist) / float(x_count)
+print x_diff
+
 
 for j in range(x_count):
     sink = j*x_diff
     x.append(sink)
-    print sink
 
 for l in x:
     mink = l * 1/desired_max_dist
