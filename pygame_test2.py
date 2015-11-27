@@ -19,7 +19,7 @@ import sys, os
 import math
 import pygame
 import time #for time.sleep testing, can be removed after testing
-import random #for rand float entry so (hopefully) no two mouse_locations are the same
+import random #for rand float entry so (hopefully) no two particle locations are the same
 from pygame.locals import *
 pygame.init()
 
@@ -122,8 +122,6 @@ def screenUpdate():
     
     pygame.display.update()
     
-    
-#main loop  
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
