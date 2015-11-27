@@ -35,27 +35,30 @@ background_color = (100, 150, 50)
 #particle variables
 base_particle_loc = (width/2,height/2)
 loc_particle_2 = (2,2)
-max_dist = 15
-particle_loc_array = []
+max_dist = 7
+#particle_loc_array = []
+
+particle_array = []
+
+class Particle:
+	loc = []
 
 def main():
 	global loc_particle_2
 	mouseCheck()
-	
+
 	particle_count = 0
 	#very greedy
-	for part_a in particle_loc_array:
-		for part_b in particle_loc_array:
-			if(part_a != part_b):
-				part_dist = locsDistCalc(part_a, part_b)
+	for part_a in particle_array:
+		for part_b in particle_array:
+			if(part_a.loc != part_b.loc):
+				part_dist = locsDistCalc(part_a.loc, part_b.loc)
 				if(part_dist < max_dist):
-					j = particleBoundsCheck(part_a, part_b, part_dist)
-					part_a = j[0]
-					part_b = j[1]
-	
-		particle_count += 1
-	#time.sleep(.25)
-	#print particle_count
+					j = particleBoundsCheck(part_a.loc, part_b.loc, part_dist)
+					part_a.loc = j[0]
+					part_b.loc = j[1]
+
+	particle_count += 1
 
 def mouseCheck():
 	is_mouse_pressed = pygame.mouse.get_pressed()[0]
@@ -66,7 +69,9 @@ def mouseCheck():
 		#pygame.mouse.get_pos is a tuple(immutable), must be changed to array before assigning to particle so particle loc can be updated
 		mouse_loc_array = [mouse_loc[0], mouse_loc[1]]
 		#Random float added to locs so no two particles have same coordinates
-		particle_loc_array.append([mouse_loc_array[0]+random.random(), mouse_loc_array[1]+random.random()])
+		m = Particle()
+		m.loc = [mouse_loc_array[0]+random.random(), mouse_loc_array[1]+random.random()]
+		particle_array.append(m)
 
 def particleBoundsCheck(part_a, part_b, part_dist):
 	#TODO: Add particle edge bounds here, too
@@ -112,8 +117,8 @@ def locsDistCalc(a, b):
 def screenUpdate():
 	screen.fill(background_color)
 	
-	for particle in particle_loc_array:
-		pygame.draw.circle(screen, black, (int(particle[0]), int(particle[1])), 5, 2)
+	for particle in particle_array:
+		pygame.draw.circle(screen, black, (int(particle.loc[0]), int(particle.loc[1])), 5, 2)
 	
 	pygame.display.update()
 	
