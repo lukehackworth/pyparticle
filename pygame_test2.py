@@ -34,17 +34,13 @@ black = (0, 0, 0)
 background_color = (100, 150, 50)
 #particle variables
 base_particle_loc = (width/2,height/2)
-loc_particle_2 = (2,2)
 max_dist = 7
-#particle_loc_array = []
-
 particle_array = []
 
 class Particle:
     loc = []
 
 def main():
-    global loc_particle_2
     mouseCheck()
 
     particle_count = 0
@@ -86,8 +82,6 @@ def particleBoundsCheck(part_a, part_b, part_dist):
     return [part_a,part_b]
 
 def particleCorrectLocFind(particle_a, particle_b):
-    #base_particle_loc = particle_a
-    #loc_particle_2 = particle_b
     particle_delta = particleDeltaFind(particle_a, loc_particle_2)
     c = math.sqrt(particle_delta[0]**2 + particle_delta[1]**2)
     
