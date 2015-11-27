@@ -38,13 +38,17 @@ max_dist = 7
 particle_array = []
 
 class Particle:
+    def __init__(self):
+        self.vel = [0,0]
     loc = []
+    vel = []
 
 def main():
     mouseCheck()
 
     #very greedy
     for part_a in particle_array:
+        part_a.vel[1] +=0.02
         for part_b in particle_array:
             if(part_a.loc != part_b.loc):
                 part_dist = locsDistCalc(part_a.loc, part_b.loc)
@@ -52,6 +56,7 @@ def main():
                     j = particleBoundsCheck(part_a.loc, part_b.loc, part_dist)
                     part_a.loc = j[0]
                     part_b.loc = j[1]
+        part_a.loc[1] += part_a.vel[1]
 
 def mouseCheck():
     is_mouse_pressed = pygame.mouse.get_pressed()[0]
@@ -118,6 +123,10 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                particle_array = []
+                print "mink!"
         pass
     main()
     screenUpdate() #draws everything
