@@ -15,6 +15,9 @@
 #  MA 02110-1301, USA.
 #  Originally made by Luke Hackworth
 
+# for reference see
+# https://www.cs.ucsb.edu/~pconrad/cs5nm/topics/pygame/drawing/
+
 import sys
 import os
 import math
@@ -24,17 +27,13 @@ import random
 from pygame.locals import *
 pygame.init()
 
-# for reference see
-# https://www.cs.ucsb.edu/~pconrad/cs5nm/topics/pygame/drawing/
 
-# Variable initialization
-# screen
 size = width, height = 640, 480
 screen = pygame.display.set_mode(size)
-# colors
+
 black = (0, 0, 0)
 background_color = (100, 150, 50)
-# particle variables
+
 base_particle_loc = (width/2, height/2)
 max_dist = 7
 particle_array = []
@@ -69,12 +68,8 @@ def mouseCheck():
     # Adds particle
     if(is_mouse_pressed):
         mouse_loc = pygame.mouse.get_pos()
-        # pygame.mouse.get_pos is a tuple(immutable), must be changed to
-        # array before assigning to particle so particle loc can be
-        # updated
         mouse_loc_array = [mouse_loc[0], mouse_loc[1]]
-        # Random float added to locs so no two particles have same
-        # coordinates
+
         m = Particle()
         m.loc = [
             mouse_loc_array[0]+random.random(),
