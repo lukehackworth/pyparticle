@@ -120,12 +120,17 @@ def screenUpdate():
     pygame.display.update()
 
 
-while True:
+def quitCheck():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.KEYDOWN:
+
+
+while True:
+    quitCheck()
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 particle_array = []
         pass
