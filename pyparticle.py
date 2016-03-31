@@ -26,9 +26,11 @@ particle_array = []
 
 
 class Particle:
-    def __init__(self):
+    def __init__(self, x, y):
         self.vel = [0, 0]
-    loc = []
+        self.x = x
+        self.y = y
+        
     vel = []
 
 
@@ -39,13 +41,14 @@ def main():
     for part_a in particle_array:
         part_a.vel[1] += 0.02
         for part_b in particle_array:
-            if(part_a.loc != part_b.loc):
-                part_dist = locsDistCalc(part_a.loc, part_b.loc)
+            if(part_a.x != part_b.x and part_a.y != part_b.y):
+                part_dist = particlesDistCalc(part_a, part_b)
                 if(part_dist < max_dist):
-                    j = particleBoundsCheck(part_a.loc, part_b.loc, part_dist)
-                    part_a.loc = j[0]
-                    part_b.loc = j[1]
-        part_a.loc[1] += part_a.vel[1]
+                    j = particleBoundsCheck(part_a, part_b, part_dist)
+                    
+                    part_a = j[0]
+                    part_b = j[1]
+        part_a.y += part_a.vel[1]
 
 
 def mouseCheck():
@@ -56,11 +59,11 @@ def mouseCheck():
         mouse_loc = pygame.mouse.get_pos()
         mouse_loc_array = [mouse_loc[0], mouse_loc[1]]
 
-        m = Particle()
-        m.loc = [
+        m = Particle(
             mouse_loc_array[0]+random.random(),
             mouse_loc_array[1]+random.random()
-        ]
+        )
+
         particle_array.append(m)
 
 
@@ -70,10 +73,10 @@ def particleBoundsCheck(part_a, part_b, part_dist):
     m = 0.5 * (max_dist - part_dist)
     delta_x_a = (m*part_delta[0])/part_dist
     delta_y_a = (m*part_delta[1])/part_dist
-    part_b[0] += delta_x_a
-    part_b[1] += delta_y_a
-    part_a[0] -= delta_x_a
-    part_a[1] -= delta_y_a
+    part_b.x += delta_x_a   
+    part_b.y += delta_y_a
+    part_a.x -= delta_x_a
+    part_a.y -= delta_y_a
     return [part_a, part_b]
 
 
@@ -92,17 +95,21 @@ def particleCorrectLocFind(particle_a, particle_b):
     return correct_loc
 
 
-def particleDeltaFind((x1, y1), (x2, y2)):
+def particleDeltaFind(a, b):
+    x1 = a.x
+    y1 = a.y
+    x2 = b.x
+    y2 = b.y
     delta_x = x2 - x1
     delta_y = y2 - y1
     return [delta_x, delta_y]
 
 
-def locsDistCalc(a, b):
-    x1 = a[0]
-    y1 = a[1]
-    x2 = b[0]
-    y2 = b[1]
+def particlesDistCalc(a, b):
+    x1 = a.x
+    y1 = a.y
+    x2 = b.x
+    y2 = b.y
     answer = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
     return answer
 
@@ -113,7 +120,7 @@ def screenUpdate():
     for particle in particle_array:
         pygame.draw.circle(
             screen, black,
-            (int(particle.loc[0]), int(particle.loc[1])),
+            (int(particle.x), int(particle.y)),
             5, 2
         )
 
