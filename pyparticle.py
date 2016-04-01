@@ -120,14 +120,11 @@ def screen_update():
     screen.fill(background_color)
 
     for particle in particle_array:
-        try:
             pygame.draw.circle(
                 screen, black,
                 (int(particle.x), int(particle.y)),
                 5, 2
             )
-        except:
-            print("Oops")
     pygame.display.update()
 
 
