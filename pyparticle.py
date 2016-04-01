@@ -3,6 +3,7 @@
 
 # for reference see
 # https://www.cs.ucsb.edu/~pconrad/cs5nm/topics/pygame/drawing/
+# I pity the fool who tries to read through this
 
 import sys
 import os
@@ -30,25 +31,41 @@ class Particle:
         self.vel = [0, 0]
         self.x = x
         self.y = y
+        self.x_vel = 0
+        self.y_vel = 0
+        self.prev_x = x
+        self.prev_y = y
         
-    vel = []
-
 
 def main():
     mouseCheck()
 
     # very greedy
     for part_a in particle_array:
-        part_a.vel[1] += 0.02
+        
+        part_a.x += part_a.x_vel
+        part_a.y += part_a.y_vel
+        
         for part_b in particle_array:
             if(part_a.x != part_b.x and part_a.y != part_b.y):
                 part_dist = particlesDistCalc(part_a, part_b)
                 if(part_dist < max_dist):
-                    j = particleBoundsCheck(part_a, part_b, part_dist)
+                    j = particleDistanceCheck(part_a, part_b, part_dist)
                     
                     part_a = j[0]
                     part_b = j[1]
-        part_a.y += part_a.vel[1]
+        #part_a.y_vel += 0.01
+        #part_a.x_vel = part_a.prev_x - part_a.x
+        #part_a.y_vel = part_a.prev_y - part_a.y
+        
+        
+        
+        part_a.x_vel = (part_a.x - part_a.prev_x)*0.2
+        part_a.y_vel = (part_a.y - part_a.prev_x)*0.2
+        
+        part_a = outerBoundsCheck(part_a)
+        part_a.prev_x = part_a.x
+        part_a.prev_y = part_a.y
 
 
 def mouseCheck():
@@ -66,8 +83,22 @@ def mouseCheck():
 
         particle_array.append(m)
 
+def outerBoundsCheck(input_particle):
+    if(input_particle.x < 0):
+        input_particle.x = 0
+        input_particle.x_vel *= -0.5
+    elif(input_particle.x > size[0]):
+        input_particle.x = size[0]
+        input_particle.x_vel *= -0.5
+    if(input_particle.y < 0):
+        input_particle.y = 0
+        input_particle.y_vel *= -0.5
+    elif(input_particle.y > size[1]):
+        input_particle.y = size[1]
+        input_particle.y_vel *= -0.5
+    return input_particle
 
-def particleBoundsCheck(part_a, part_b, part_dist):
+def particleDistanceCheck(part_a, part_b, part_dist):
     # TODO: Add particle edge bounds here, too
     part_delta = particleDeltaFind(part_a, part_b)
     m = 0.5 * (max_dist - part_dist)
@@ -118,12 +149,14 @@ def screenUpdate():
     screen.fill(background_color)
 
     for particle in particle_array:
-        pygame.draw.circle(
-            screen, black,
-            (int(particle.x), int(particle.y)),
-            5, 2
-        )
-
+        try:
+            pygame.draw.circle(
+                screen, black,
+                (int(particle.x), int(particle.y)),
+                5, 2
+            )
+        except:
+            print("Oops")
     pygame.display.update()
 
 
