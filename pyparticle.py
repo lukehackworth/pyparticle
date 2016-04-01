@@ -40,7 +40,6 @@ class Particle:
 def main():
     mouse_check()
 
-    # very greedy
     for part_a in particle_array:
         
         part_a.x += part_a.x_vel
@@ -54,12 +53,7 @@ def main():
                     
                     part_a = j[0]
                     part_b = j[1]
-        #part_a.y_vel += 0.01
-        #part_a.x_vel = part_a.prev_x - part_a.x
-        #part_a.y_vel = part_a.prev_y - part_a.y
-        
-        
-        
+
         part_a.x_vel = (part_a.x - part_a.prev_x)*0.002
         part_a.y_vel = (part_a.y - part_a.prev_x)*0.002
         part_a.y_vel += -0.002
@@ -111,37 +105,14 @@ def particle_distance_check(part_a, part_b, part_dist):
     return [part_a, part_b]
 
 
-def particle_correct_loc_find(particle_a, particle_b):
-    particle_delta = particle_delta_find(particle_a, loc_particle_2)
-    c = math.sqrt(particle_delta[0]**2 + particle_delta[1]**2)
-
-    correct_delta_x = (particle_delta[0]*max_dist)/c
-    correct_delta_y = (particle_delta[1]*max_dist)/c
-
-    # offset delta from base_particle_loc
-    correct_x = base_particle_loc[0] + correct_delta_x
-    correct_y = base_particle_loc[1] + correct_delta_y
-
-    correct_loc = (correct_x, correct_y)
-    return correct_loc
-
-
 def particle_delta_find(a, b):
-    x1 = a.x
-    y1 = a.y
-    x2 = b.x
-    y2 = b.y
-    delta_x = x2 - x1
-    delta_y = y2 - y1
+    delta_x = b.x - a.x
+    delta_y = b.y - a.y
     return [delta_x, delta_y]
 
 
 def particles_dist_calc(a, b):
-    x1 = a.x
-    y1 = a.y
-    x2 = b.x
-    y2 = b.y
-    answer = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+    answer = math.hypot((b.x-a.x),(b.y-a.y))
     return answer
 
 
