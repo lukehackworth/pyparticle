@@ -35,22 +35,22 @@ class Particle:
         self.y_vel = 0
         self.prev_x = x
         self.prev_y = y
-        
+
 
 def main():
     mouse_check()
 
     for part_a in particle_array:
-        
+
         part_a.x += part_a.x_vel
         part_a.y += part_a.y_vel
-        
+
         for part_b in particle_array:
             if(part_a.x != part_b.x and part_a.y != part_b.y):
                 part_dist = particles_dist_calc(part_a, part_b)
                 if(part_dist < max_dist):
                     j = move_particles_away(part_a, part_b, part_dist)
-                    
+
                     part_a = j[0]
                     part_b = j[1]
 
@@ -77,6 +77,7 @@ def mouse_check():
 
         particle_array.append(m)
 
+
 def outer_bounds_check(input_particle):
     if(input_particle.x < 0):
         input_particle.x = 0
@@ -92,13 +93,14 @@ def outer_bounds_check(input_particle):
         input_particle.y_vel *= -0.5
     return input_particle
 
+
 def move_particles_away(part_a, part_b, part_dist):
     # returns particles separated by distance part_dist
     part_delta = particle_delta_find(part_a, part_b)
     m = 0.5 * (max_dist - part_dist)
     delta_x_a = (m*part_delta[0])/part_dist
     delta_y_a = (m*part_delta[1])/part_dist
-    part_b.x += delta_x_a   
+    part_b.x += delta_x_a
     part_b.y += delta_y_a
     part_a.x -= delta_x_a
     part_a.y -= delta_y_a
@@ -112,7 +114,7 @@ def particle_delta_find(a, b):
 
 
 def particles_dist_calc(a, b):
-    answer = math.hypot((b.x-a.x),(b.y-a.y))
+    answer = math.hypot((b.x-a.x), (b.y-a.y))
     return answer
 
 
