@@ -60,9 +60,9 @@ def main():
         
         
         
-        part_a.x_vel = (part_a.x - part_a.prev_x)*0.2
-        part_a.y_vel = (part_a.y - part_a.prev_x)*0.2
-        
+        part_a.x_vel = (part_a.x - part_a.prev_x)*0.002
+        part_a.y_vel = (part_a.y - part_a.prev_x)*0.002
+        part_a.y_vel += -0.002
         part_a = outer_bounds_check(part_a)
         part_a.prev_x = part_a.x
         part_a.prev_y = part_a.y
