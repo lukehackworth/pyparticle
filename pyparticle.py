@@ -141,6 +141,5 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 particle_array = []
-        pass
     main()
     screen_update()  # draws everything
