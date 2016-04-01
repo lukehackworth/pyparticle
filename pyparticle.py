@@ -49,7 +49,7 @@ def main():
             if(part_a.x != part_b.x and part_a.y != part_b.y):
                 part_dist = particles_dist_calc(part_a, part_b)
                 if(part_dist < max_dist):
-                    j = particle_distance_check(part_a, part_b, part_dist)
+                    j = move_particles_away(part_a, part_b, part_dist)
                     
                     part_a = j[0]
                     part_b = j[1]
@@ -92,8 +92,8 @@ def outer_bounds_check(input_particle):
         input_particle.y_vel *= -0.5
     return input_particle
 
-def particle_distance_check(part_a, part_b, part_dist):
-    # TODO: Add particle edge bounds here, too
+def move_particles_away(part_a, part_b, part_dist):
+    # returns particles separated by distance part_dist
     part_delta = particle_delta_find(part_a, part_b)
     m = 0.5 * (max_dist - part_dist)
     delta_x_a = (m*part_delta[0])/part_dist
