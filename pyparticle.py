@@ -21,8 +21,7 @@ screen = pygame.display.set_mode(window_size)
 black = (0, 0, 0)
 background_color = (100, 150, 50)
 
-base_particle_loc = (width/2, height/2)
-max_dist = 7
+max_dist = 14
 particle_array = []
 
 
@@ -54,9 +53,9 @@ def main():
                     part_a = j[0]
                     part_b = j[1]
 
-        part_a.x_vel = (part_a.x - part_a.prev_x)*0.002
-        part_a.y_vel = (part_a.y - part_a.prev_x)*0.002
-        part_a.y_vel += -0.002
+        part_a.x_vel = (part_a.x - part_a.prev_x)*.0002
+        part_a.y_vel = (part_a.y - part_a.prev_x)*.0002
+        part_a.y_vel += 0.5
         part_a = outer_bounds_check(part_a)
         part_a.prev_x = part_a.x
         part_a.prev_y = part_a.y
@@ -131,17 +130,19 @@ def screen_update():
 
 
 def quit_check():
+    global particle_array
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            print(str(event.key))
+            if event.key == pygame.K_SPACE:
+                particle_array = []
 
 
 while True:
     quit_check()
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                particle_array = []
+
     main()
     screen_update()  # draws everything
