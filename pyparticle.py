@@ -15,8 +15,8 @@ from pygame.locals import *
 pygame.init()
 
 
-size = width, height = 640, 480
-screen = pygame.display.set_mode(size)
+window_size = width, height = 640, 480
+screen = pygame.display.set_mode(window_size)
 
 black = (0, 0, 0)
 background_color = (100, 150, 50)
@@ -81,14 +81,14 @@ def outer_bounds_check(input_particle):
     if(input_particle.x < 0):
         input_particle.x = 0
         input_particle.x_vel *= -0.5
-    elif(input_particle.x > size[0]):
-        input_particle.x = size[0]
+    elif(input_particle.x > window_size[0]):
+        input_particle.x = window_size[0]
         input_particle.x_vel *= -0.5
     if(input_particle.y < 0):
         input_particle.y = 0
         input_particle.y_vel *= -0.5
-    elif(input_particle.y > size[1]):
-        input_particle.y = size[1]
+    elif(input_particle.y > window_size[1]):
+        input_particle.y = window_size[1]
         input_particle.y_vel *= -0.5
     return input_particle
 
