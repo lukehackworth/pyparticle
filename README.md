@@ -1,5 +1,4 @@
 # pyparticle
 Inspired by Grant Kot's various fluid simulators he's made over the years.
 I originally made a version of this in C# using XNA Game Studio Express. This one is less efficient, but much cleaner.
-In each frame and for each particle, an average force is calculated, which will be a summation of all the forces applied to a particle. The particle's location will change according to the average force, then bounds will be checked.
-The force applied to an individual particle will be a function of a damped sine wave. The idea is to have both a repulsive force and attractive force, with the repulsive force being much stronger. The attractive force will(hopefully) create a viscous effect.
+Right now there's basic particle bounds checking and velocity. Eventually I'd like to enable the use of force to be able to apply a force equal to the function of a damped sine wave. The idea is to be repulsive at short distances and attractive at long distances, making the fluid seem viscous.
