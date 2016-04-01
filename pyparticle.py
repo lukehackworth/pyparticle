@@ -38,7 +38,7 @@ class Particle:
         
 
 def main():
-    mouseCheck()
+    mouse_check()
 
     # very greedy
     for part_a in particle_array:
@@ -48,9 +48,9 @@ def main():
         
         for part_b in particle_array:
             if(part_a.x != part_b.x and part_a.y != part_b.y):
-                part_dist = particlesDistCalc(part_a, part_b)
+                part_dist = particles_dist_calc(part_a, part_b)
                 if(part_dist < max_dist):
-                    j = particleDistanceCheck(part_a, part_b, part_dist)
+                    j = particle_distance_check(part_a, part_b, part_dist)
                     
                     part_a = j[0]
                     part_b = j[1]
@@ -63,12 +63,12 @@ def main():
         part_a.x_vel = (part_a.x - part_a.prev_x)*0.2
         part_a.y_vel = (part_a.y - part_a.prev_x)*0.2
         
-        part_a = outerBoundsCheck(part_a)
+        part_a = outer_bounds_check(part_a)
         part_a.prev_x = part_a.x
         part_a.prev_y = part_a.y
 
 
-def mouseCheck():
+def mouse_check():
     is_mouse_pressed = pygame.mouse.get_pressed()[0]
 
     # Adds particle
@@ -83,7 +83,7 @@ def mouseCheck():
 
         particle_array.append(m)
 
-def outerBoundsCheck(input_particle):
+def outer_bounds_check(input_particle):
     if(input_particle.x < 0):
         input_particle.x = 0
         input_particle.x_vel *= -0.5
@@ -98,9 +98,9 @@ def outerBoundsCheck(input_particle):
         input_particle.y_vel *= -0.5
     return input_particle
 
-def particleDistanceCheck(part_a, part_b, part_dist):
+def particle_distance_check(part_a, part_b, part_dist):
     # TODO: Add particle edge bounds here, too
-    part_delta = particleDeltaFind(part_a, part_b)
+    part_delta = particle_delta_find(part_a, part_b)
     m = 0.5 * (max_dist - part_dist)
     delta_x_a = (m*part_delta[0])/part_dist
     delta_y_a = (m*part_delta[1])/part_dist
@@ -111,8 +111,8 @@ def particleDistanceCheck(part_a, part_b, part_dist):
     return [part_a, part_b]
 
 
-def particleCorrectLocFind(particle_a, particle_b):
-    particle_delta = particleDeltaFind(particle_a, loc_particle_2)
+def particle_correct_loc_find(particle_a, particle_b):
+    particle_delta = particle_delta_find(particle_a, loc_particle_2)
     c = math.sqrt(particle_delta[0]**2 + particle_delta[1]**2)
 
     correct_delta_x = (particle_delta[0]*max_dist)/c
@@ -126,7 +126,7 @@ def particleCorrectLocFind(particle_a, particle_b):
     return correct_loc
 
 
-def particleDeltaFind(a, b):
+def particle_delta_find(a, b):
     x1 = a.x
     y1 = a.y
     x2 = b.x
@@ -136,7 +136,7 @@ def particleDeltaFind(a, b):
     return [delta_x, delta_y]
 
 
-def particlesDistCalc(a, b):
+def particles_dist_calc(a, b):
     x1 = a.x
     y1 = a.y
     x2 = b.x
@@ -145,7 +145,7 @@ def particlesDistCalc(a, b):
     return answer
 
 
-def screenUpdate():
+def screen_update():
     screen.fill(background_color)
 
     for particle in particle_array:
@@ -160,7 +160,7 @@ def screenUpdate():
     pygame.display.update()
 
 
-def quitCheck():
+def quit_check():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -168,11 +168,11 @@ def quitCheck():
 
 
 while True:
-    quitCheck()
+    quit_check()
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 particle_array = []
         pass
     main()
-    screenUpdate()  # draws everything
+    screen_update()  # draws everything
