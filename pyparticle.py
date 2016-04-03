@@ -22,7 +22,7 @@ black = (0, 0, 0)
 background_color = (100, 150, 50)
 
 max_dist = 14
-particle_array = []
+particle_list = []
 
 
 class Particle:
@@ -39,12 +39,12 @@ class Particle:
 def main():
     mouse_check()
 
-    for part_a in particle_array:
+    for part_a in particle_list:
 
         part_a.x += part_a.x_vel
         part_a.y += part_a.y_vel
 
-        for part_b in particle_array:
+        for part_b in particle_list:
             if(part_a.x != part_b.x and part_a.y != part_b.y):
                 part_dist = particles_dist_calc(part_a, part_b)
                 if(part_dist < max_dist):
@@ -67,14 +67,14 @@ def mouse_check():
     # Adds particle
     if(is_mouse_pressed):
         mouse_loc = pygame.mouse.get_pos()
-        mouse_loc_array = [mouse_loc[0], mouse_loc[1]]
+        mouse_loc_list = [mouse_loc[0], mouse_loc[1]]
 
         m = Particle(
-            mouse_loc_array[0]+random.random(),
-            mouse_loc_array[1]+random.random()
+            mouse_loc_list[0]+random.random(),
+            mouse_loc_list[1]+random.random()
         )
 
-        particle_array.append(m)
+        particle_list.append(m)
 
 
 def outer_bounds_check(input_particle):
@@ -120,7 +120,7 @@ def particles_dist_calc(a, b):
 def screen_update():
     screen.fill(background_color)
 
-    for particle in particle_array:
+    for particle in particle_list:
             pygame.draw.circle(
                 screen, black,
                 (int(particle.x), int(particle.y)),
@@ -130,15 +130,14 @@ def screen_update():
 
 
 def quit_check():
-    global particle_array
+    global particle_list
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            print(str(event.key))
             if event.key == pygame.K_SPACE:
-                particle_array = []
+                particle_list = []
 
 
 while True:
