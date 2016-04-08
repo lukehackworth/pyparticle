@@ -53,8 +53,8 @@ def main():
                     part_a = j[0]
                     part_b = j[1]
 
-        part_a.x_vel = (part_a.x - part_a.prev_x)*.0002
-        part_a.y_vel = (part_a.y - part_a.prev_x)*.0002
+        part_a.x_vel = (part_a.x - part_a.prev_x)
+        part_a.y_vel = (part_a.y - part_a.prev_y)
         part_a.y_vel += 0.5
         part_a = outer_bounds_check(part_a)
         part_a.prev_x = part_a.x
