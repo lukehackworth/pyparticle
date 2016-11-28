@@ -35,14 +35,41 @@ class Particle:
         self.prev_x = x
         self.prev_y = y
 
+    def move(self):
+        self.x += self.x_vel
+        self.y += self.y_vel
+
+    def calculate_velocity(self):
+        self.x_vel = (self.x - self.prev_x)
+        self.y_vel = (self.y - self.prev_y)
+
+    def add_gravity(self, input_gravity):
+        self.y_vel += input_gravity
+
+    def check_bounds(self):
+        if(self.x < 0):
+            self.x = 0
+            self.x_vel *= -0.5
+        elif(self.x > window_size[0]):
+            self.x = window_size[0]
+            self.x_vel *= -0.5
+        if(self.y < 0):
+            self.y = 0
+            self.y_vel *= -0.5
+        elif(self.y > window_size[1]):
+            self.y = window_size[1]
+            self.y_vel *= -0.5
+
+    def assign_prev_loc(self):
+        self.prev_x = self.x
+        self.prev_y = self.y
 
 def main():
     mouse_check()
 
     for part_a in particle_list:
 
-        part_a.x += part_a.x_vel
-        part_a.y += part_a.y_vel
+        part_a.move()
 
         for part_b in particle_list:
             if(part_a.x != part_b.x and part_a.y != part_b.y):
@@ -53,12 +80,10 @@ def main():
                     part_a = j[0]
                     part_b = j[1]
 
-        part_a.x_vel = (part_a.x - part_a.prev_x)
-        part_a.y_vel = (part_a.y - part_a.prev_y)
-        part_a.y_vel += 0.5
-        part_a = outer_bounds_check(part_a)
-        part_a.prev_x = part_a.x
-        part_a.prev_y = part_a.y
+        part_a.calculate_velocity()
+        part_a.add_gravity(0.5)
+        part_a.check_bounds()
+        part_a.assign_prev_loc()
 
 
 def mouse_check():
@@ -77,20 +102,7 @@ def mouse_check():
         particle_list.append(m)
 
 
-def outer_bounds_check(input_particle):
-    if(input_particle.x < 0):
-        input_particle.x = 0
-        input_particle.x_vel *= -0.5
-    elif(input_particle.x > window_size[0]):
-        input_particle.x = window_size[0]
-        input_particle.x_vel *= -0.5
-    if(input_particle.y < 0):
-        input_particle.y = 0
-        input_particle.y_vel *= -0.5
-    elif(input_particle.y > window_size[1]):
-        input_particle.y = window_size[1]
-        input_particle.y_vel *= -0.5
-    return input_particle
+
 
 
 def move_particles_away(part_a, part_b, part_dist):
