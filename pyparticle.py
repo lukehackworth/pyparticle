@@ -94,8 +94,8 @@ def mouse_check():
         mouse_loc_list = [mouse_loc[0], mouse_loc[1]]
 
         m = Particle(
-            mouse_loc_list[0]+random.random(),
-            mouse_loc_list[1]+random.random()
+            mouse_loc_list[0]+random.randint(0, 30),
+            mouse_loc_list[1]+random.randint(0, 30)
         )
 
         particle_list.append(m)
