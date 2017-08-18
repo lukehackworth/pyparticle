@@ -22,6 +22,7 @@ background_color = (100, 150, 50)
 
 max_dist = 14
 particle_list = []
+part_bound_check_num = 3
 
 
 class Particle:
@@ -70,14 +71,13 @@ def main():
 
         part_a.move()
 
-        for part_b in particle_list:
-            if(part_a.x != part_b.x and part_a.y != part_b.y):
-                part_dist = particles_dist_calc(part_a, part_b)
-                if(part_dist < max_dist):
-                    j = move_particles_away(part_a, part_b, part_dist)
+        for x in range(part_bound_check_num):
+            for part_b in particle_list:
+                if(part_a.x != part_b.x and part_a.y != part_b.y):
+                    part_dist = particles_dist_calc(part_a, part_b)
+                    if(part_dist < max_dist):
+                        (part_a, part_b) = move_particles_away(part_a, part_b, part_dist)
 
-                    part_a = j[0]
-                    part_b = j[1]
 
         part_a.calculate_velocity()
         part_a.add_gravity(0.5)
