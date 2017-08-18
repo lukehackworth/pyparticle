@@ -3,7 +3,6 @@
 
 # for reference see
 # https://www.cs.ucsb.edu/~pconrad/cs5nm/topics/pygame/drawing/
-# I pity the fool who tries to read through this
 
 import sys
 import os
@@ -100,9 +99,6 @@ def mouse_check():
         )
 
         particle_list.append(m)
-
-
-
 
 
 def move_particles_away(part_a, part_b, part_dist):
